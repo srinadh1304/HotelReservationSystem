@@ -7,10 +7,10 @@ public class HotelReservationMain implements HotelReservationInterface {
 	
 	ArrayList<Hotel> hotelList = new ArrayList<Hotel>();
 	Hotel hotels;
-	@Override
-	public boolean addHotel(String name, double rate) {
-		hotels=new Hotel(name,rate);
-		return this.hotelList.add(hotels);
+	public boolean  addHotel(Hotel hotel) {
+		hotelList.add(hotel);
+		System.out.println(hotel);
+		return true;
 	}
 	public Hotel getCheapestHotel(LocalDate date1, LocalDate date2) {
 		Period period = Period.between(date1, date2);
