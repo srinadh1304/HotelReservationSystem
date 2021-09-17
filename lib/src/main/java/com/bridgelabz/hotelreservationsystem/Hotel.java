@@ -2,9 +2,9 @@ package com.bridgelabz.hotelreservationsystem;
 
 public class Hotel {
 	private String name;
-	private int rate;
+	private Double rate;
 	
-	public Hotel(String hotelName, int rate) {
+	public Hotel(String hotelName, Double rate) {
 		this.name=hotelName;
 		this.rate=rate;
 	}
@@ -14,11 +14,13 @@ public class Hotel {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public int getRate() {
+	public Double getRate() {
 		return rate;
 	}
-	public void setRate(int rate) {
+	public void setRate(Double rate) {
 		this.rate = rate;
 	}
-	
+	public Double getPrice(int numOfDays) {
+		return rate*numOfDays;
+	}
 }
