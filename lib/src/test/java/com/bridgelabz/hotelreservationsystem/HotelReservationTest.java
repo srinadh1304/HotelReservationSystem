@@ -51,4 +51,12 @@ public class HotelReservationTest {
 		Hotel cheapestHotel = hotels.getCheapestHotel(startDate,lastDate);
 		assertEquals("Bridgewood",cheapestHotel.getName());
 	}
+	@Test
+	public void givenDateRange_find_CheapestAndBestRatedHotel() {
+		LocalDate startDate = LocalDate.of(2021, 3, 19);
+	    LocalDate lastDate = LocalDate.of(2021, 3, 24);
+		Hotel hotel = hotels.getCheapestAndBestRatedHotel(startDate,lastDate);
+		assertEquals("Bridgewood",hotel.getName());
+		assertEquals(4,hotel.getRating());
+	}
 }
