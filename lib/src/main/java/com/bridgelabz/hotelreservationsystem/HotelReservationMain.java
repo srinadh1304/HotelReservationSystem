@@ -71,6 +71,15 @@ public class HotelReservationMain implements HotelReservationInterface {
 			   .orElse(null);
 	}
 	
+	public Hotel findBestRatedHotel(LocalDate startDate,LocalDate lastDate)
+	{		
+		Hotel bestRatedHotel = hotelList.stream()
+				   .max((h1,h2) -> h1.getRating()-h2.getRating())
+				   .orElse(null);
+		System.out.println("The Best Rated Hotel is : "+bestRatedHotel.getName());
+		return bestRatedHotel;
+	}
+
 	
 
 }
