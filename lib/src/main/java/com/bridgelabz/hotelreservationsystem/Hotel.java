@@ -6,6 +6,8 @@ public class Hotel {
 	private double weekdayPrice;
 	private double rewardWeekdayPrice;
 	private double rewardWeekendPrice;
+	
+	
 	private int rating;
 
 
@@ -57,6 +59,18 @@ public class Hotel {
 		this.weekendPrice = weekendPrice;
 	}
 	
+	public double getRewardWeekdayPrice() {
+		return rewardWeekdayPrice;
+	}
+	public void setRewardWeekdayPrice(double rewardWeekdayPrice) {
+		this.rewardWeekdayPrice = rewardWeekdayPrice;
+	}
+	public double getRewardWeekendPrice() {
+		return rewardWeekendPrice;
+	}
+	public void setRewardWeekendPrice(double rewardWeekendPrice) {
+		this.rewardWeekendPrice = rewardWeekendPrice;
+	}
 	public Double getPrice(int numOfWeekdays, int numOfWeekends) {
 		return weekdayPrice*numOfWeekdays + weekendPrice*numOfWeekends;
 	}
