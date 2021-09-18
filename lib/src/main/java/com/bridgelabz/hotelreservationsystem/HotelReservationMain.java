@@ -3,7 +3,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.stream.Collectors;
 public class HotelReservationMain implements HotelReservationInterface {
 	
@@ -41,6 +41,34 @@ public class HotelReservationMain implements HotelReservationInterface {
 				.collect(Collectors.toCollection(ArrayList::new));
 		
         return cheapestHotel.get(0);
+	}
+	public Hotel getCheapestAndBestRatedHotel(LocalDate startDate, LocalDate endDate) {
+	
+		int numberOfDays = (int) ChronoUnit.DAYS.between(startDate, endDate);
+        int weekends = 0;
+       while (startDate.compareTo(endDate) != 0) {
+            switch (DayOfWeek.of(startDate.get(ChronoField.DAY_OF_WEEK))) {
+                case SATURDAY:
+                    ++weekends;
+                    break;
+                case SUNDAY:
+                    ++weekends;
+                    break;
+            }
+            startDate = startDate.plusDays(1);
+        }
+		int totalWeekDays = numberOfDays - weekends;
+		int totalWeekEnds = weekends;
+		final double cheapestPrice = hotelList.stream()
+				.mapToDouble(hotel -> ((hotel.getWeekendPrice()*totalWeekEnds) + hotel.getWeekdayPrice()*totalWeekDays))
+				.min()
+				.orElse(Double.MAX_VALUE);
+		ArrayList<Hotel> cheapestHotels = hotelList.stream()
+				.filter(hotel -> (hotel.getWeekendPrice()*totalWeekEnds + hotel.getWeekdayPrice()*totalWeekDays) == cheapestPrice)
+				.collect(Collectors.toCollection(ArrayList::new));
+		return cheapestHotels.stream()
+			   .max((h1,h2) -> h1.getRating()-h2.getRating())
+			   .orElse(null);
 	}
 	
 	
