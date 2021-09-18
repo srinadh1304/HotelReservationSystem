@@ -1,8 +1,10 @@
 package com.bridgelabz.hotelreservationsystem;
-
+import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.Period;
-import java.util.*;
+import java.time.temporal.ChronoField;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
 public class HotelReservationMain implements HotelReservationInterface {
 	
 	ArrayList<Hotel> hotelList = new ArrayList<Hotel>();
@@ -12,10 +14,33 @@ public class HotelReservationMain implements HotelReservationInterface {
 		System.out.println(hotel);
 		return true;
 	}
-	public Hotel getCheapestHotel(LocalDate date1, LocalDate date2) {
-		Period period = Period.between(date1, date2);
-		int numOfDays = period.getDays();
-		return hotelList.stream().min((h1,h2) -> h1.getPrice(numOfDays).compareTo(h2.getPrice(numOfDays))).orElse(null);
+	@SuppressWarnings("incomplete-switch")
+	public Hotel getCheapestHotel(LocalDate startDate, LocalDate endDate) {
+		int numberOfDays = (int) ChronoUnit.DAYS.between(startDate, endDate);
+        int weekends = 0;
+       while (startDate.compareTo(endDate) != 0) {
+            switch (DayOfWeek.of(startDate.get(ChronoField.DAY_OF_WEEK))) {
+                case SATURDAY:
+                    ++weekends;
+                    break;
+                case SUNDAY:
+                    ++weekends;
+                    break;
+            }
+            startDate = startDate.plusDays(1);
+        }
+		int totalWeekDays = numberOfDays - weekends;
+		int totalWeekEnds = weekends;
+		final double cheapestPrice = hotelList.stream()
+				.mapToDouble(hotel -> ((hotel.getWeekendPrice()*totalWeekEnds) + hotel.getWeekdayPrice()*totalWeekDays))
+				.min()
+				.orElse(Double.MAX_VALUE);
+		
+		ArrayList<Hotel> cheapestHotel = hotelList.stream()
+				.filter(hotel -> (hotel.getWeekendPrice()*totalWeekEnds + hotel.getWeekdayPrice()*totalWeekDays) == cheapestPrice)
+				.collect(Collectors.toCollection(ArrayList::new));
+		
+        return cheapestHotel.get(0);
 	}
 	
 	
