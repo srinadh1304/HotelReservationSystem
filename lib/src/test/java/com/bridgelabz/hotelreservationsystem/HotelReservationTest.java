@@ -43,4 +43,12 @@ public class HotelReservationTest {
 		boolean hotel1 = hotelReservation.addHotel(hotelForTest);
 		Assert.assertTrue(hotel1);
 	}
+	@Test
+	public void givenWeekdaysAndWeekends_WhenCorrect_ShoulReturnProperHotelName()
+	{
+		LocalDate startDate = LocalDate.of(2021, 3, 19);
+	    LocalDate lastDate = LocalDate.of(2021, 3, 24);
+		Hotel cheapestHotel = hotels.getCheapestHotel(startDate,lastDate);
+		assertEquals("Bridgewood",cheapestHotel.getName());
+	}
 }
