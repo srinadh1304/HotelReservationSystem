@@ -11,9 +11,9 @@ public class HotelReservationTest {
 	@Before
 	public void initialize() {
 		hotels = new HotelReservationMain();
-		Hotel firstHotel  = new Hotel("Lakewood",110,90,3);
-		Hotel secondHotel  = new Hotel("Bridgewood",150,50,4);
-		Hotel thirdHotel  = new Hotel("Ridgewood",220,150,5);
+		Hotel firstHotel  = new Hotel("Lakewood",110,90,80,80,3);
+		Hotel secondHotel  = new Hotel("Bridgewood",150,50,110,80,4);
+		Hotel thirdHotel  = new Hotel("Ridgewood",220,150,100,40,5);
 		hotels.addHotel(firstHotel);
 		hotels.addHotel(secondHotel);
 		hotels.addHotel(thirdHotel);
@@ -67,4 +67,14 @@ public class HotelReservationTest {
 		Hotel cheapestHotel = hotels.findBestRatedHotel(startDate, lastDate);
 		assertEquals("Ridgewood",cheapestHotel.getName());
 	}
+	@Test
+	public void givenRewardPrices_Added_ShoulReturnTrue()
+	{
+		HotelReservationMain hotelReservation = new HotelReservationMain();
+		Hotel hotelForTest =new Hotel("Lakewood",110,90,80,80,3);
+		boolean hotel1 = hotelReservation.addHotel(hotelForTest);
+		Assert.assertTrue(hotel1);
+		
+	}
+	
 }
